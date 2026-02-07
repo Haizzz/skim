@@ -1,5 +1,5 @@
 import { PRAnalysis, PRDetail } from "@/lib/types";
-import { RiskBadge } from "./badges";
+import { SizeBadge } from "./badges";
 
 interface BriefingCardProps {
   analysis: PRAnalysis;
@@ -12,7 +12,7 @@ export default function BriefingCard({ analysis, pr }: BriefingCardProps) {
       {/* Header */}
       <div className="space-y-2">
         <div className="flex items-center gap-2">
-          <RiskBadge level={analysis.riskLevel} />
+          <SizeBadge size={analysis.size} />
           <span className="text-text-tertiary text-sm">#{pr.number}</span>
         </div>
         <h2 className="text-xl font-bold leading-tight">{pr.title}</h2>

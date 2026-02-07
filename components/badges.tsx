@@ -1,6 +1,6 @@
-import { RiskLevel } from "@/lib/types";
+import { PRSize } from "@/lib/types";
 
-export function SizeBadge({ size }: { size: "S" | "M" | "L" | "XL" }) {
+export function SizeBadge({ size }: { size: PRSize }) {
   const colors: Record<string, string> = {
     S: "bg-size-s/20 text-size-s",
     M: "bg-size-m/20 text-size-m",
@@ -13,30 +13,6 @@ export function SizeBadge({ size }: { size: "S" | "M" | "L" | "XL" }) {
       className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-mono font-semibold ${colors[size]}`}
     >
       {size}
-    </span>
-  );
-}
-
-export function RiskBadge({ level }: { level: RiskLevel }) {
-  const config: Record<
-    RiskLevel,
-    { bg: string; text: string; label: string }
-  > = {
-    low: { bg: "bg-risk-low/15", text: "text-risk-low", label: "Low" },
-    medium: {
-      bg: "bg-risk-medium/15",
-      text: "text-risk-medium",
-      label: "Med",
-    },
-    high: { bg: "bg-risk-high/15", text: "text-risk-high", label: "High" },
-  };
-
-  const { bg, text, label } = config[level];
-  return (
-    <span
-      className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold ${bg} ${text}`}
-    >
-      {label}
     </span>
   );
 }
@@ -63,11 +39,9 @@ export function StatusDot({
   return <span className={`inline-block w-2 h-2 rounded-full ${colors[status]}`} />;
 }
 
-export function computeRiskLevel(
-  changedFiles: number,
-  totalLines: number
-): RiskLevel {
-  if (changedFiles > 10 || totalLines > 500) return "high";
-  if (changedFiles > 5 || totalLines > 200) return "medium";
-  return "low";
+export function computePRSize(totalLines: number): PRSize {
+  if (totalLines > 500) return "XL";
+  if (totalLines > 200) return "L";
+  if (totalLines > 50) return "M";
+  return "S";
 }
