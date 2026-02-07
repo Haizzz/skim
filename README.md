@@ -6,9 +6,16 @@
 
 A mobile-first, AI-native pull request review interface. Paste a GitHub PR URL and get a structured briefing with swipeable concept cards instead of raw file-by-file diffs.
 
-Cow-themed because skim milk.
+"Skim" a PR -> skim milk -> cow -> moo
 
 <https://github.com/user-attachments/assets/f2475435-8163-48a5-a2d7-9d457ca02139>
+
+## Why
+
+For side projects in the vibe coding era, you want to double check the agents' work but you're not that concerned about syntax, line numbers, formatting, etc... Traditional review interfaces and IDEs are too heavy. The main things you want to know are
+- Intent of change
+- Changes to concepts and components in your code not individual lines
+- Review according to the change narrative
 
 ## How It Works
 
