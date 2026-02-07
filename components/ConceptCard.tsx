@@ -157,6 +157,8 @@ function ObjectItem({
         )}
       </button>
 
+      <p className="px-4 pb-2 text-xs text-text-tertiary">{obj.desc}</p>
+
       {expanded && obj.members.length > 0 && (
         <div className="bg-bg-raised">
           {obj.members.map((m, i) => (
@@ -185,8 +187,6 @@ function ObjectItem({
           ))}
         </div>
       )}
-
-      <p className="px-4 pb-2 text-xs text-text-tertiary">{obj.desc}</p>
     </div>
   );
 }
