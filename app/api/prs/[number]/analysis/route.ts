@@ -4,7 +4,26 @@ import { splitDiffByFile } from "@/lib/diff-parser";
 import { analyzeFile, synthesizePR } from "@/lib/ai";
 import { FileAnalysis, AnalysisResult } from "@/lib/types";
 
+const MAX_CACHE = 50;
 const cache = new Map<string, AnalysisResult>();
+
+function cacheSet(key: string, value: AnalysisResult) {
+  if (cache.size >= MAX_CACHE) {
+    // Delete oldest entry (first key in insertion order)
+    const oldest = cache.keys().next().value;
+    if (oldest !== undefined) cache.delete(oldest);
+  }
+  cache.set(key, value);
+}
+
+function cacheGet(key: string): AnalysisResult | undefined {
+  const value = cache.get(key);
+  if (value === undefined) return undefined;
+  // Move to end (most recently used)
+  cache.delete(key);
+  cache.set(key, value);
+  return value;
+}
 
 export async function GET(
   request: NextRequest,
@@ -24,9 +43,17 @@ export async function GET(
   try {
     const pr = getPR(repo, prNum);
     const cacheKey = `${repo}:${prNum}:${pr.headRefOid}`;
+    const cachePrefix = `${repo}:${prNum}:`;
+
+    // Evict stale entries for this PR (old commit SHAs)
+    for (const key of cache.keys()) {
+      if (key.startsWith(cachePrefix) && key !== cacheKey) {
+        cache.delete(key);
+      }
+    }
 
     // If cached, return as a single SSE "done" event
-    const cached = cache.get(cacheKey);
+    const cached = cacheGet(cacheKey);
     if (cached) {
       const stream = new ReadableStream({
         start(controller) {
@@ -101,8 +128,7 @@ export async function GET(
           prAnalysis = await synthesizePR(fileAnalyses, pr.title, pr.body);
         } catch {
           prAnalysis = {
-            summary: pr.title,
-            riskLevel: "medium" as const,
+            size: "M" as const,
             keyChanges: [],
             intent: "",
             concepts: [
@@ -119,7 +145,7 @@ export async function GET(
         }
 
         const result: AnalysisResult = { prAnalysis, fileAnalyses };
-        cache.set(cacheKey, result);
+        cacheSet(cacheKey, result);
 
         send({ type: "done", data: result });
         controller.close();

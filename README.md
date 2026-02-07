@@ -1,6 +1,10 @@
+<p align="center">
+  <img src="public/logo.png" alt="Skim" width="120" />
+</p>
+
 # Skim
 
-A mobile-first, AI-powered pull request review interface. Paste a GitHub PR URL and get a structured briefing with swipeable concept cards instead of raw file-by-file diffs.
+A mobile-first, AI-native pull request review interface. Paste a GitHub PR URL and get a structured briefing with swipeable concept cards instead of raw file-by-file diffs.
 
 Cow-themed because skim milk.
 
@@ -20,12 +24,20 @@ The AI analysis happens in two phases: each file is analyzed independently in pa
 ```bash
 # Prerequisites
 gh auth login                    # GitHub CLI must be authenticated
-echo "OPENAI_API_KEY=sk-..." > .env.local
+cp .env.example .env.local       # then fill in your API key
 
 # Install & run
 pnpm install
 pnpm dev
 ```
+
+### Environment Variables
+
+| Variable | Required | Default | Description |
+|---|---|---|---|
+| `OPENAI_API_KEY` | Yes | — | Your OpenAI (or compatible) API key |
+| `OPENAI_MODEL` | No | `gpt-5.2` | Model to use for analysis |
+| `OPENAI_BASE_URL` | No | *(empty — uses OpenAI)* | Base URL for OpenAI-compatible APIs (e.g. Ollama, Azure, Together) |
 
 Open [http://localhost:3000](http://localhost:3000) and paste a GitHub PR URL.
 
@@ -37,7 +49,7 @@ There is no authentication or authorization built into Skim. Anyone who can reac
 
 - [Next.js 15](https://nextjs.org/) (App Router, TypeScript, Turbopack)
 - [Tailwind CSS v4](https://tailwindcss.com/) with custom dark theme
-- [OpenAI API](https://platform.openai.com/) (gpt-5.2) for two-phase analysis
+- [OpenAI API](https://platform.openai.com/) (configurable model, defaults to gpt-5.2) for two-phase analysis
 - [GitHub CLI](https://cli.github.com/) (`gh`) for PR data
 - IBM Plex Sans / Mono fonts
 

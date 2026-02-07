@@ -1,11 +1,15 @@
 import OpenAI from "openai";
 import { FileAnalysis, PRAnalysis } from "./types";
 
-const openai = new OpenAI();
+const openai = new OpenAI({
+  ...(process.env.OPENAI_BASE_URL && { baseURL: process.env.OPENAI_BASE_URL }),
+});
+
+const MODEL = process.env.OPENAI_MODEL || "gpt-5.2";
 
 async function jsonChat<T>(system: string, user: string): Promise<T> {
   const response = await openai.chat.completions.create({
-    model: "gpt-5.2",
+    model: MODEL,
     response_format: { type: "json_object" },
     temperature: 0.2,
     messages: [
@@ -65,8 +69,7 @@ export function synthesizePR(
   return jsonChat(
     `You synthesize per-file analyses of a pull request into a high-level narrative review. Return a JSON object with this exact schema:
 {
-  "summary": "string (2-3 sentence PR summary)",
-  "riskLevel": "low" | "medium" | "high",
+  "size": "S" | "M" | "L" | "XL",
   "keyChanges": ["string (most important changes, what was done)"],
   "intent": "string (1-2 sentences: why this PR exists, what it aims to achieve)",
   "concepts": [
@@ -84,7 +87,8 @@ export function synthesizePR(
 Guidelines:
 - Group files into conceptual themes (e.g. "Auth Flow", "Database Migration", "UI Updates")
 - Order concepts in narrative reading order (most important/foundational first)
-- Size based on scope: S (1-2 files, small changes), M (2-4 files), L (4-8 files), XL (8+ files or major changes)
+- PR size based on lines changed: S (≤50), M (51-200), L (201-500), XL (500+)
+- Concept size based on scope: S (1-2 files, small changes), M (2-4 files), L (4-8 files), XL (8+ files or major changes)
 - keyChanges: the most important concrete changes made (what was added, modified, removed)
 - intent: the purpose or goal behind this PR (why it exists)
 - Keep everything concise`,

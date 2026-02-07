@@ -8,7 +8,7 @@ export interface PRListItem {
   createdAt: string;
 }
 
-export type RiskLevel = "low" | "medium" | "high";
+export type PRSize = "S" | "M" | "L" | "XL";
 
 export interface PRDetail {
   number: number;
@@ -59,8 +59,7 @@ export interface FileAnalysis {
 }
 
 export interface PRAnalysis {
-  summary: string;
-  riskLevel: RiskLevel;
+  size: PRSize;
   keyChanges: string[];
   intent: string;
   concepts: {

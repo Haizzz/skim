@@ -1,6 +1,6 @@
 # Skim
 
-AI-powered pull request review interface. Uses `gh` CLI for GitHub data, OpenAI for analysis, and Next.js for the web app. Instead of reviewing diffs file-by-file, the AI restructures changes into narrative concepts that can be swiped through like a briefing.
+AI-native pull request review interface. Uses `gh` CLI for GitHub data, OpenAI for analysis, and Next.js for the web app. Instead of reviewing diffs file-by-file, the AI restructures changes into narrative concepts that can be swiped through like a briefing.
 
 Cow-themed vocabulary: **Pasteurize** (approve), **Moo** (comment), **Graze** (request changes), **Moove along** (submit).
 
@@ -8,7 +8,7 @@ Cow-themed vocabulary: **Pasteurize** (approve), **Moo** (comment), **Graze** (r
 
 - **Next.js 15** (App Router, TypeScript, Turbopack)
 - **Tailwind CSS v4** with custom dark theme tokens in `globals.css`
-- **OpenAI SDK** (`gpt-5.2`) for two-phase AI analysis
+- **OpenAI SDK** (configurable model via `OPENAI_MODEL`, defaults to `gpt-5.2`) for two-phase AI analysis
 - **GitHub CLI** (`gh`) called via `child_process` from API routes
 - **IBM Plex Sans / Mono** fonts from Google Fonts
 
@@ -25,7 +25,6 @@ Cow-themed vocabulary: **Pasteurize** (approve), **Moo** (comment), **Graze** (r
 ### API Routes
 
 ```
-GET  /api/prs?repo=owner/repo                   → List open PRs
 GET  /api/prs/[number]?repo=owner/repo          → PR details
 GET  /api/prs/[number]/diff?repo=owner/repo     → Parsed diff
 GET  /api/prs/[number]/analysis?repo=owner/repo → SSE stream of AI analysis
@@ -58,7 +57,7 @@ Two-phase, per-file-first approach in `lib/ai.ts`:
 
 Both phases use `jsonChat<T>()` — a shared helper that calls `openai.chat.completions.create` with JSON response format.
 
-Results are cached in-memory keyed by `repo:number:commitSHA`.
+Results are cached in-memory (LRU, max 50 entries) keyed by `repo:number:commitSHA`.
 
 ## Design Tokens
 
@@ -99,7 +98,8 @@ pnpm build        # production build
 ### Prerequisites
 
 - **`gh` CLI** installed and authenticated (`gh auth login`)
-- **`OPENAI_API_KEY`** set in `.env.local`
+- **`OPENAI_API_KEY`** set in `.env.local` (copy `.env.example`)
+- Optionally: **`OPENAI_MODEL`** (default `gpt-5.2`) and **`OPENAI_BASE_URL`** (empty = OpenAI) for compatible providers
 
 ### Adding a new component
 

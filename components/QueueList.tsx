@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { PRListItem } from "@/lib/types";
-import { RiskBadge, computeRiskLevel } from "./badges";
+import { SizeBadge, computePRSize } from "./badges";
 
 function timeAgo(dateStr: string): string {
   const seconds = Math.floor(
@@ -34,10 +34,7 @@ export default function QueueList({ prs, owner, repo }: QueueListProps) {
   return (
     <div className="divide-y divide-border-subtle">
       {prs.map((pr) => {
-        const risk = computeRiskLevel(
-          pr.changedFiles,
-          pr.additions + pr.deletions
-        );
+        const size = computePRSize(pr.additions + pr.deletions);
         return (
           <Link
             key={pr.number}
@@ -46,7 +43,7 @@ export default function QueueList({ prs, owner, repo }: QueueListProps) {
           >
             <div className="flex items-start gap-3">
               <div className="shrink-0 pt-0.5">
-                <RiskBadge level={risk} />
+                <SizeBadge size={size} />
               </div>
               <div className="min-w-0 flex-1 space-y-1">
                 <div className="flex items-center gap-2">
