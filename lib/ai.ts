@@ -69,7 +69,6 @@ export function synthesizePR(
   return jsonChat(
     `You synthesize per-file analyses of a pull request into a high-level narrative review. Return a JSON object with this exact schema:
 {
-  "summary": "string (2-3 sentence PR summary)",
   "riskLevel": "low" | "medium" | "high",
   "keyChanges": ["string (most important changes, what was done)"],
   "intent": "string (1-2 sentences: why this PR exists, what it aims to achieve)",

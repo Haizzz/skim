@@ -120,7 +120,6 @@ export async function GET(
           prAnalysis = await synthesizePR(fileAnalyses, pr.title, pr.body);
         } catch {
           prAnalysis = {
-            summary: pr.title,
             riskLevel: "medium" as const,
             keyChanges: [],
             intent: "",

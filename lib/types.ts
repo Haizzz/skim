@@ -59,7 +59,6 @@ export interface FileAnalysis {
 }
 
 export interface PRAnalysis {
-  summary: string;
   riskLevel: RiskLevel;
   keyChanges: string[];
   intent: string;
