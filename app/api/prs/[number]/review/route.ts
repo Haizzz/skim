@@ -1,12 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { execSync } from "child_process";
-
-function sanitizeRepo(input: string): string {
-  if (!/^[a-zA-Z0-9._-]+\/[a-zA-Z0-9._-]+$/.test(input)) {
-    throw new Error(`Invalid repo format: ${input}`);
-  }
-  return input;
-}
+import { sanitizeRepo, sanitizeNumber } from "@/lib/gh";
 
 export async function POST(
   request: NextRequest,
@@ -20,10 +14,7 @@ export async function POST(
   }
 
   const safeRepo = sanitizeRepo(repo);
-  const safeNum = parseInt(number, 10);
-  if (safeNum <= 0 || safeNum > 999999) {
-    return NextResponse.json({ error: "Invalid PR number" }, { status: 400 });
-  }
+  const safeNum = sanitizeNumber(parseInt(number, 10));
 
   const eventMap: Record<string, string> = {
     approve: "APPROVE",

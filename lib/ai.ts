@@ -1,11 +1,15 @@
 import OpenAI from "openai";
 import { FileAnalysis, PRAnalysis } from "./types";
 
-const openai = new OpenAI();
+const openai = new OpenAI({
+  ...(process.env.OPENAI_BASE_URL && { baseURL: process.env.OPENAI_BASE_URL }),
+});
+
+const MODEL = process.env.OPENAI_MODEL || "gpt-5.2";
 
 async function jsonChat<T>(system: string, user: string): Promise<T> {
   const response = await openai.chat.completions.create({
-    model: "gpt-5.2",
+    model: MODEL,
     response_format: { type: "json_object" },
     temperature: 0.2,
     messages: [

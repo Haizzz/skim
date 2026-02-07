@@ -1,4 +1,5 @@
 import { listPRs } from "@/lib/gh";
+import { PRListItem } from "@/lib/types";
 import NavBar from "@/components/NavBar";
 import QueueList from "@/components/QueueList";
 
@@ -10,7 +11,7 @@ export default async function QueuePage({ params }: Props) {
   const { owner, repo } = await params;
   const repoSlug = `${owner}/${repo}`;
 
-  let prs: Awaited<ReturnType<typeof listPRs>> = [];
+  let prs: PRListItem[] = [];
   let error: string | null = null;
 
   try {

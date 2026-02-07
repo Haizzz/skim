@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Skim",
-  description: "AI-powered pull request review",
+  description: "AI-native pull request review",
 };
 
 export const viewport: Viewport = {

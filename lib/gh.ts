@@ -1,7 +1,7 @@
 import { execSync } from "child_process";
 import { PRListItem, PRDetail } from "./types";
 
-function sanitizeRepo(input: string): string {
+export function sanitizeRepo(input: string): string {
   // Only allow alphanumeric, hyphens, underscores, dots, and slashes
   if (!/^[a-zA-Z0-9._-]+\/[a-zA-Z0-9._-]+$/.test(input)) {
     throw new Error(`Invalid repo format: ${input}`);
@@ -9,7 +9,7 @@ function sanitizeRepo(input: string): string {
   return input;
 }
 
-function sanitizeNumber(input: number): number {
+export function sanitizeNumber(input: number): number {
   const n = Math.floor(input);
   if (n <= 0 || n > 999999) {
     throw new Error(`Invalid PR number: ${input}`);
