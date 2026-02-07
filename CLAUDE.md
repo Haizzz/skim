@@ -54,7 +54,7 @@ Two-phase, per-file-first approach in `lib/ai.ts`:
 
 **Phase A — Per-file (parallel):** Each changed file's diff is sent individually to OpenAI. Returns objects, members, annotations, risks, and decisions per file. All requests fire concurrently with `Promise.all()`. Progress is streamed to the client via SSE.
 
-**Phase B — Synthesis (single call):** All file analyses (as JSON) are sent to a second OpenAI call that groups them into conceptual themes, produces the overall summary, risk level, key decisions, and risks.
+**Phase B — Synthesis (single call):** All file analyses (as JSON) are sent to a second OpenAI call that groups them into conceptual themes, produces the overall summary, risk level, key changes, and intent.
 
 Both phases use `jsonChat<T>()` — a shared helper that calls `openai.chat.completions.create` with JSON response format.
 
@@ -76,10 +76,10 @@ All colors defined as CSS variables in `app/globals.css` via Tailwind v4's `@the
 
 ```
 ReviewPage
-├── NavBar (sticky top bar with logo + review actions)
+├── NavBar (sticky top bar: logo → home, repo breadcrumb → queue, review actions)
 │   └── ReviewDropdown (Pasteurize / Moo / Graze buttons + compose bar)
 ├── SwipeView (touch carousel)
-│   ├── BriefingCard (summary, stats, decisions, risks)
+│   ├── BriefingCard (summary, stats, intent, key changes)
 │   ├── ConceptCard × N (one per theme)
 │   │   └── FileObjectCard (expandable file)
 │   │       └── ObjectItem (expandable code construct)
@@ -116,3 +116,7 @@ Both prompts live in `lib/ai.ts` as string arguments to `jsonChat()`. The respon
 ### Syntax highlighting
 
 `lib/syntax.ts` provides a regex-based tokenizer. `components/HighlightedCode.tsx` renders tokens with color classes. Used by `DiffTable` for context lines in diffs.
+
+### Keeping docs up to date
+
+When making changes to the codebase, update both `CLAUDE.md` and `README.md` to reflect the current state. This includes changes to architecture, components, API routes, design tokens, AI prompts, or any user-facing behavior.

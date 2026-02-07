@@ -8,7 +8,7 @@ Cow-themed because skim milk.
 
 1. **Paste a GitHub URL** — enter a repo or PR link on the landing page
 2. **Browse the queue** — see open PRs with risk levels, line counts, and authors
-3. **Read the briefing** — AI summarizes the PR into key decisions, risks, and stats
+3. **Read the briefing** — AI summarizes the PR into key changes, intent, and stats
 4. **Swipe through concepts** — changes are grouped into narrative themes (e.g. "Auth Flow", "DB Migration")
 5. **Drill into code** — expand objects and members, view syntax-highlighted diffs with AI annotations
 6. **Submit your review** — Pasteurize (approve), Moo (comment), or Graze (request changes)
@@ -53,14 +53,14 @@ app/
 
 components/
   SwipeView.tsx                 Touch carousel with dot indicators
-  BriefingCard.tsx              PR summary, stats, decisions, risks
+  BriefingCard.tsx              PR summary, stats, intent, key changes
   ConceptCard.tsx               Themed file groups with expandable objects
   CodeView.tsx                  Full-screen diff with AI annotations
   FullDiffCard.tsx              Complete file-by-file diff card
   DiffTable.tsx                 Shared diff renderer with syntax highlighting
   HighlightedCode.tsx           Syntax token coloring
   ReviewDropdown.tsx            Pasteurize / Moo / Graze review actions
-  NavBar.tsx                    Sticky navigation bar with logo
+  NavBar.tsx                    Sticky nav: logo → home, repo breadcrumb → queue
   badges.tsx                    Risk, size, kind badges
 
 lib/
