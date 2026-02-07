@@ -80,7 +80,7 @@ export default function ReviewPage({ params }: Props) {
             } else if (event.type === "progress") {
               setProgress((prev) => prev ? {
                 ...prev,
-                completed: Math.max(prev.completed + 1, event.completed),
+                completed: event.completed,
                 phase: "files",
                 currentFile: event.file,
               } : null);

@@ -43,6 +43,14 @@ export async function GET(
   try {
     const pr = getPR(repo, prNum);
     const cacheKey = `${repo}:${prNum}:${pr.headRefOid}`;
+    const cachePrefix = `${repo}:${prNum}:`;
+
+    // Evict stale entries for this PR (old commit SHAs)
+    for (const key of cache.keys()) {
+      if (key.startsWith(cachePrefix) && key !== cacheKey) {
+        cache.delete(key);
+      }
+    }
 
     // If cached, return as a single SSE "done" event
     const cached = cacheGet(cacheKey);
