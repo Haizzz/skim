@@ -35,11 +35,13 @@ export default function ReviewPage({ params }: Props) {
   const [progress, setProgress] = useState<AnalysisProgress | null>(null);
 
   useEffect(() => {
+    const abort = new AbortController();
+
     async function load() {
       try {
         const [prRes, diffRes] = await Promise.all([
-          fetch(`/api/prs/${prNum}?repo=${encodeURIComponent(repoSlug)}`),
-          fetch(`/api/prs/${prNum}/diff?repo=${encodeURIComponent(repoSlug)}`),
+          fetch(`/api/prs/${prNum}?repo=${encodeURIComponent(repoSlug)}`, { signal: abort.signal }),
+          fetch(`/api/prs/${prNum}/diff?repo=${encodeURIComponent(repoSlug)}`, { signal: abort.signal }),
         ]);
 
         if (!prRes.ok) throw new Error("Failed to load PR details");
@@ -54,7 +56,8 @@ export default function ReviewPage({ params }: Props) {
 
         // Stream analysis with SSE
         const analysisRes = await fetch(
-          `/api/prs/${prNum}/analysis?repo=${encodeURIComponent(repoSlug)}`
+          `/api/prs/${prNum}/analysis?repo=${encodeURIComponent(repoSlug)}`,
+          { signal: abort.signal }
         );
 
         if (!analysisRes.ok || !analysisRes.body) return;
@@ -93,12 +96,14 @@ export default function ReviewPage({ params }: Props) {
           }
         }
       } catch (e: unknown) {
+        if (abort.signal.aborted) return;
         setError(e instanceof Error ? e.message : "Failed to load");
         setLoading(false);
       }
     }
 
     load();
+    return () => abort.abort();
   }, [prNum, repoSlug]);
 
   const activeCodeFile = codeViewFile
