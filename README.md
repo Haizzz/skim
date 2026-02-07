@@ -8,6 +8,8 @@ A mobile-first, AI-native pull request review interface. Paste a GitHub PR URL a
 
 Cow-themed because skim milk.
 
+<https://github.com/user-attachments/assets/f2475435-8163-48a5-a2d7-9d457ca02139>
+
 ## How It Works
 
 1. **Paste a GitHub URL** — enter a repo or PR link on the landing page
