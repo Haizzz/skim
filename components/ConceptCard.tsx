@@ -75,7 +75,7 @@ function FileObjectCard({
           <p className="text-sm font-mono text-text truncate">
             {file.file.split("/").pop()}
           </p>
-          <p className="text-xs text-text-tertiary truncate">{file.summary}</p>
+          <p className="text-xs text-text-tertiary break-words">{file.summary}</p>
         </div>
         <svg
           width="16"

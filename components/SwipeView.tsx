@@ -12,6 +12,8 @@ export default function SwipeView({ panes, labels }: SwipeViewProps) {
   const [translateX, setTranslateX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const startX = useRef(0);
+  const startY = useRef(0);
+  const direction = useRef<"horizontal" | "vertical" | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const goTo = useCallback(
@@ -25,17 +27,35 @@ export default function SwipeView({ panes, labels }: SwipeViewProps) {
 
   const handleTouchStart = (e: React.TouchEvent) => {
     startX.current = e.touches[0].clientX;
+    startY.current = e.touches[0].clientY;
+    direction.current = null;
     setIsDragging(true);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDragging) return;
-    const diff = e.touches[0].clientX - startX.current;
-    setTranslateX(diff);
+    const dx = e.touches[0].clientX - startX.current;
+    const dy = e.touches[0].clientY - startY.current;
+
+    if (direction.current === null) {
+      const absDx = Math.abs(dx);
+      const absDy = Math.abs(dy);
+      if (absDx < 5 && absDy < 5) return;
+      direction.current = absDx > absDy ? "horizontal" : "vertical";
+    }
+
+    if (direction.current === "vertical") return;
+    setTranslateX(dx);
   };
 
   const handleTouchEnd = () => {
+    const wasHorizontal = direction.current === "horizontal";
     setIsDragging(false);
+    direction.current = null;
+    if (!wasHorizontal) {
+      setTranslateX(0);
+      return;
+    }
     const threshold = 60;
     if (translateX < -threshold) {
       goTo(currentIndex + 1);
