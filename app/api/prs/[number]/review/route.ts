@@ -28,9 +28,9 @@ export async function POST(
   }
 
   try {
-    const bodyArg = body ? ` --body '${body.replace(/'/g, "'\\''")}'` : "";
+    const bodyArg = body ? ` --body "${body.replace(/"/g, '\\"')}"` : "";
     execSync(
-      `gh pr review ${safeNum} --repo '${safeRepo}' --${event.toLowerCase().replace("_", "-")}${bodyArg}`,
+      `gh pr review ${safeNum} --repo ${safeRepo} --${event.toLowerCase().replace("_", "-")}${bodyArg}`,
       { encoding: "utf-8", timeout: 15000 }
     );
 
