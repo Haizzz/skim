@@ -140,7 +140,7 @@ function ObjectItem({
       >
         <KindTag kind={obj.kind} />
         <span className="text-sm font-mono text-text">{obj.name}</span>
-        {obj.members.length > 0 && (
+        {obj.members?.length > 0 && (
           <svg
             width="12"
             height="12"
@@ -159,7 +159,7 @@ function ObjectItem({
 
       <p className="px-4 pb-2 text-xs text-text-tertiary">{obj.desc}</p>
 
-      {expanded && obj.members.length > 0 && (
+      {expanded && obj.members && obj.members.length > 0 && (
         <div className="bg-bg-raised">
           {obj.members.map((m, i) => (
             <div
