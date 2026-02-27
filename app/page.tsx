@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { parseGithubInput } from "@/lib/parse-input";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const STORAGE_KEY = "pr-review-recent";
 
@@ -55,7 +56,10 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-6">
+    <div className="min-h-screen flex flex-col items-center justify-center px-6 relative">
+      <div className="fixed top-4 right-4 z-50">
+        <ThemeToggle />
+      </div>
       <div className="w-full max-w-lg space-y-8">
         <div className="text-center space-y-3">
           <img src="/logo.png" alt="Skim" className="w-20 h-20 mx-auto" />

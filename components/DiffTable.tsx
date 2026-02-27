@@ -54,7 +54,7 @@ export default function DiffTable({ file, annotations }: DiffTableProps) {
                       line.content
                     )}
                     {annotation && (
-                      <div className="mt-1 mb-1 px-2 py-1.5 rounded-md bg-accent-subtle border border-accent/30 text-accent text-[11px] font-sans leading-snug">
+                      <div className="mt-1 mb-1 px-2 py-1.5 rounded-md bg-accent-subtle border border-accent/30 text-accent text-xs font-sans leading-snug">
                         {annotation}
                       </div>
                     )}

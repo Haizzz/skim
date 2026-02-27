@@ -7,7 +7,7 @@ Cow-themed vocabulary: **Pasteurize** (approve), **Moo** (comment), **Graze** (r
 ## Tech Stack
 
 - **Next.js 15** (App Router, TypeScript, Turbopack)
-- **Tailwind CSS v4** with custom dark theme tokens in `globals.css`
+- **Tailwind CSS v4** with light/dark theme tokens in `globals.css` (dark default, light via `[data-theme="light"]`)
 - **OpenAI SDK** (configurable model via `OPENAI_MODEL`, defaults to `gpt-5.2`) for two-phase AI analysis
 - **GitHub CLI** (`gh`) called via `child_process` from API routes
 - **IBM Plex Sans / Mono** fonts from Google Fonts
@@ -34,7 +34,7 @@ POST /api/prs/[number]/review                    → Submit review (approve/comm
 ### Key Directories
 
 - `app/` — Pages and API routes (Next.js App Router)
-- `components/` — React components (SwipeView, BriefingCard, ConceptCard, CodeView, FullDiffCard, ReviewDropdown, NavBar, badges)
+- `components/` — React components (SwipeView, BriefingCard, ConceptCard, CodeView, FullDiffCard, ReviewDropdown, NavBar, ThemeProvider, ThemeToggle, badges)
 - `lib/` — Core logic (gh CLI wrapper, OpenAI calls, diff parser, syntax highlighter, URL parser, types)
 - `public/` — Static assets (logo)
 
@@ -61,21 +61,23 @@ Results are cached in-memory (LRU, max 50 entries) keyed by `repo:number:commitS
 
 ## Design Tokens
 
-All colors defined as CSS variables in `app/globals.css` via Tailwind v4's `@theme` directive:
+Dark theme colors defined as CSS variables in `app/globals.css` via Tailwind v4's `@theme` directive. Light theme overrides live in a `[data-theme="light"]` selector block. Theme is managed by `ThemeProvider` (React context + localStorage key `skim-theme`) with FOUC prevention via inline script in `layout.tsx`. `ThemeToggle` cycles light → auto → dark.
 
 - **Backgrounds:** `bg`, `bg-raised`, `bg-card`, `bg-hover`, `bg-overlay`
 - **Text:** `text`, `text-secondary`, `text-tertiary`
-- **Accent:** `accent` (warm cream #d4a76a, matching the cow logo)
+- **Accent:** `accent` (dark: warm cream #d4a76a; light: deeper gold #b8893a)
 - **Risk:** `risk-low` (green), `risk-medium` (yellow), `risk-high` (red)
 - **Diff:** `diff-add-bg/text`, `diff-remove-bg/text`
 - **Syntax:** `syn-keyword`, `syn-string`, `syn-number`, `syn-comment`, `syn-type`, `syn-punct`
 - **Size badges:** `size-s` (green), `size-m` (blue), `size-l` (yellow), `size-xl` (red)
+- **Font scale:** `text-xs` overridden to 13px (default 12px) for readability
 
 ## Component Hierarchy
 
 ```
 ReviewPage
 ├── NavBar (sticky top bar: logo → home, repo breadcrumb → queue, review actions)
+│   ├── ThemeToggle (light/auto/dark cycling button)
 │   └── ReviewDropdown (Pasteurize / Moo / Graze buttons + compose bar)
 ├── SwipeView (touch carousel)
 │   ├── BriefingCard (summary, stats, intent, key changes)

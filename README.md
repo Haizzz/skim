@@ -57,7 +57,7 @@ There is no authentication or authorization built into Skim. Anyone who can reac
 ## Tech Stack
 
 - [Next.js 15](https://nextjs.org/) (App Router, TypeScript, Turbopack)
-- [Tailwind CSS v4](https://tailwindcss.com/) with custom dark theme
+- [Tailwind CSS v4](https://tailwindcss.com/) with light/dark theme and system preference detection
 - [OpenAI API](https://platform.openai.com/) (configurable model, defaults to gpt-5.2) for two-phase analysis
 - [GitHub CLI](https://cli.github.com/) (`gh`) for PR data
 - IBM Plex Sans / Mono fonts
@@ -82,6 +82,8 @@ components/
   HighlightedCode.tsx           Syntax token coloring
   ReviewDropdown.tsx            Pasteurize / Moo / Graze review actions
   NavBar.tsx                    Sticky nav: logo → home, repo breadcrumb → queue
+  ThemeProvider.tsx              Light/dark/auto theme context + persistence
+  ThemeToggle.tsx                3-state cycling button (sun/monitor/moon)
   badges.tsx                    Risk, size, kind badges
 
 lib/

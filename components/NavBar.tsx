@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import ThemeToggle from "./ThemeToggle";
 
 interface NavBarProps {
   title: string;
@@ -48,7 +49,10 @@ export default function NavBar({ title, backHref, repo, right }: NavBarProps) {
           )}
           <h1 className="text-sm font-semibold truncate">{title}</h1>
         </div>
-        {right && <div className="shrink-0">{right}</div>}
+        <div className="flex items-center gap-2 shrink-0">
+          <ThemeToggle />
+          {right}
+        </div>
       </div>
     </nav>
   );

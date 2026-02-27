@@ -19,7 +19,7 @@ export function SizeBadge({ size }: { size: PRSize }) {
 
 export function KindTag({ kind }: { kind: string }) {
   return (
-    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono font-medium bg-accent-subtle text-accent uppercase tracking-wider">
+    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-mono font-medium bg-accent-subtle text-accent uppercase tracking-wider">
       {kind}
     </span>
   );

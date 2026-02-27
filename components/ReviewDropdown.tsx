@@ -119,7 +119,7 @@ export default function ReviewDropdown({ repo, prNumber }: ReviewDropdownProps) 
             </button>
             {/* Tooltip below */}
             <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 px-2 py-1 bg-bg-card border border-border rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
-              <div className="text-[10px] text-text-tertiary">{a.tooltip}</div>
+              <div className="text-xs text-text-tertiary">{a.tooltip}</div>
             </div>
           </div>
         ))}

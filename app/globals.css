@@ -14,8 +14,8 @@
   --color-border-subtle: #1e1e28;
 
   --color-text: #e8e8ed;
-  --color-text-secondary: #8a8a9a;
-  --color-text-tertiary: #5a5a6a;
+  --color-text-secondary: #9a9aaa;
+  --color-text-tertiary: #7a7a8a;
   --color-text-inverse: #0a0a0f;
 
   --color-accent: #d4a76a;
@@ -43,6 +43,51 @@
   --color-syn-comment: #546e7a;
   --color-syn-type: #ffcb6b;
   --color-syn-punct: #89ddff;
+
+  --font-size-xs: 0.8125rem;
+  --font-size-xs--line-height: 1.25rem;
+}
+
+[data-theme="light"] {
+  --color-bg: #f8f7f5;
+  --color-bg-raised: #f0efed;
+  --color-bg-card: #ffffff;
+  --color-bg-hover: #eae9e6;
+  --color-bg-overlay: rgba(248, 247, 245, 0.95);
+
+  --color-border: #d8d6d0;
+  --color-border-subtle: #e8e6e2;
+
+  --color-text: #1a1a1f;
+  --color-text-secondary: #5a5a65;
+  --color-text-tertiary: #8a8a95;
+  --color-text-inverse: #f8f7f5;
+
+  --color-accent: #b8893a;
+  --color-accent-hover: #a07830;
+  --color-accent-subtle: rgba(184, 137, 58, 0.1);
+
+  --color-risk-low: #0a8f5e;
+  --color-risk-medium: #b58a10;
+  --color-risk-high: #d93545;
+
+  --color-diff-add-bg: rgba(10, 143, 94, 0.08);
+  --color-diff-add-text: #0a8f5e;
+  --color-diff-remove-bg: rgba(217, 53, 69, 0.08);
+  --color-diff-remove-text: #d93545;
+  --color-diff-context-bg: transparent;
+
+  --color-size-s: #0a8f5e;
+  --color-size-m: #2a7fd4;
+  --color-size-l: #b58a10;
+  --color-size-xl: #d93545;
+
+  --color-syn-keyword: #8839b0;
+  --color-syn-string: #4a8c20;
+  --color-syn-number: #c65d2e;
+  --color-syn-comment: #7a8a90;
+  --color-syn-type: #a07830;
+  --color-syn-punct: #3a8ab0;
 }
 
 @layer base {

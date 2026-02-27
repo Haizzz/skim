@@ -131,7 +131,7 @@ export default function SwipeView({ panes, labels }: SwipeViewProps) {
                 />
               ))}
             </div>
-            <span className="text-[10px] text-text-tertiary font-mono">
+            <span className="text-xs text-text-tertiary font-mono">
               {currentIndex + 1}/{panes.length}
             </span>
           </div>

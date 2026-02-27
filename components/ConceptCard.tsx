@@ -173,13 +173,13 @@ function ObjectItem({
                 </span>
                 <button
                   onClick={() => onViewCode(fileName)}
-                  className="ml-auto text-[10px] text-accent hover:text-accent-hover"
+                  className="ml-auto text-xs text-accent hover:text-accent-hover"
                 >
                   code &rsaquo;
                 </button>
               </div>
               {m.desc && (
-                <p className="text-[11px] text-text-tertiary mt-1 pl-7">
+                <p className="text-xs text-text-tertiary mt-1 pl-7">
                   {m.desc}
                 </p>
               )}

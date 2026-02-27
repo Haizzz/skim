@@ -68,7 +68,7 @@ function Stat({
       <div className={`text-lg font-bold font-mono ${color || "text-text"}`}>
         {value}
       </div>
-      <div className="text-[10px] text-text-tertiary uppercase tracking-wider">
+      <div className="text-xs text-text-tertiary uppercase tracking-wider">
         {label}
       </div>
     </div>
